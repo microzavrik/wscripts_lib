@@ -3,7 +3,10 @@ This repository is a wscript class that implements various system related method
 - Current RAM utilization on the system
 - Getting information about the video adapter
 - Creating desktop screenshot in .jpg format
+- Getting the string name of the CPU
 
 The rest of the functions can be found in the wscript.h file
+
+Requirements: DirectX SDK, C++17
 
 This library will be used for the first time in a pet project, which will be a website where the user will be able to track activities on their device remotely.
