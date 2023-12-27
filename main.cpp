@@ -1,7 +1,8 @@
 #include "wscript.h"
+#include <iostream>
 
 int main(int argc, char* argv[])
 {
 	wscript script;
-	script.take_screen_shot("bebra.jpg");
+	std::cout << script.get_cpu_vendor_string().c_str() << std::endl;
 }

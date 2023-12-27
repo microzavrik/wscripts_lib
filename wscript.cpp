@@ -113,3 +113,44 @@ VOID wscript::take_screen_shot(const std::string& path)
 	fi.write(reinterpret_cast<const char*>(&buf[0]), buf.size() * sizeof(BYTE));
 	fi.close();
 }
+
+std::string wscript::split_into_chars(DWORD value)
+{
+	std::string str;
+	const char* p_cursor = (const char*)&value;
+	for (int i = 0; i < sizeof(value); i++)
+	{
+		str += p_cursor[i];
+	}
+	return str;
+}
+
+std::string wscript::get_cpu_vendor_substring(DWORD Eax)
+{
+	cpuid_regs regs;
+	__cpuid((int*)&regs, Eax);
+	std::string str;
+	str += split_into_chars(regs.Eax);
+	str += split_into_chars(regs.Ebx);
+	str += split_into_chars(regs.Ecx);
+	str += split_into_chars(regs.Edx);
+	return str;
+}
+
+#if 1
+std::string wscript::get_cpu_vendor_string()
+{
+	std::string vendor_string;
+	cpuid_regs regs;
+	__cpuid((int*)&regs, 0x80000000);
+	if (regs.Eax > 0x80000004)
+	{
+		vendor_string =
+			get_cpu_vendor_substring(0x80000002) +
+			get_cpu_vendor_substring(0x80000003) +
+			get_cpu_vendor_substring(0x80000004)
+			;
+	}
+	return vendor_string;
+}
+#endif
